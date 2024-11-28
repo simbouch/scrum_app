@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-    <h2>Prediction Result</h2>
-    <p>The predicted medical expenses are: <strong>${{ prediction }}</strong></p>
-    <a href="{{ url_for('index') }}">Make another prediction</a>
+<div class="card shadow p-4">
+    <h2 class="text-center">Prediction Result</h2>
+    <p class="text-center fs-4 mt-3">The predicted medical expenses are:</p>
+    <p class="text-center fs-2 fw-bold text-success">${{ prediction }}</p>
+    <div class="text-center mt-4">
+        <a href="{{ url_for('routes.index') }}" class="btn btn-secondary">Make Another Prediction</a>
+    </div>
 </div>
 {% endblock %}

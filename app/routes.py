@@ -1,23 +1,34 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from app.model import predict_expenses
 
+# Define Blueprint
 routes = Blueprint('routes', __name__)
 
 @routes.route('/')
 def index():
-    return render_template('index.html', title="Home - Medical Expenses Prediction")
+    """
+    Render the home page with the input form.
+    """
+    return render_template('index.html', title="Medical Expenses Prediction")
 
 @routes.route('/predict', methods=['POST'])
 def predict():
+    """
+    Handle POST requests to predict medical expenses.
+    """
     try:
+        # Extract input data from the form
         data = {
             "age": int(request.form['age']),
             "bmi": float(request.form['bmi']),
             "children": int(request.form['children']),
-            "smoker": int(request.form['smoker']),
+            "smoker": request.form['smoker'],
             "region": request.form['region']
         }
+        # Make prediction
         prediction = predict_expenses(data)
-        return render_template('result.html', title="Prediction Result", prediction=prediction)
+        if "error" in prediction:
+            return render_template('error.html', error_message=prediction['error'])
+        return render_template('result.html', prediction=prediction['prediction'])
     except Exception as e:
-        return render_template('error.html', title="Error", error_message=str(e))
+        return render_template('error.html', error_message=str(e))
