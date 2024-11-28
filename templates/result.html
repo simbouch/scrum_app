@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div>
+    <h2>Prediction Result</h2>
+    <p>The predicted medical expenses are: <strong>${{ prediction }}</strong></p>
+    <a href="{{ url_for('index') }}">Make another prediction</a>
+</div>
+{% endblock %}
