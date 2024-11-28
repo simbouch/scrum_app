@@ -15,9 +15,10 @@ def index():
 def predict():
     """
     Handle POST requests to predict medical expenses.
+    Always return 300 euros as the prediction.
     """
     try:
-        # Extract input data from the form
+        # Extract input data from the form (optional, kept for validation purposes)
         data = {
             "age": int(request.form['age']),
             "bmi": float(request.form['bmi']),
@@ -25,10 +26,10 @@ def predict():
             "smoker": request.form['smoker'],
             "region": request.form['region']
         }
-        # Make prediction
-        prediction = predict_expenses(data)
-        if "error" in prediction:
-            return render_template('error.html', error_message=prediction['error'])
-        return render_template('result.html', prediction=prediction['prediction'])
+
+        # Return a fixed prediction value
+        prediction = "3000 euros"
+        return render_template('result.html', prediction=prediction)
     except Exception as e:
         return render_template('error.html', error_message=str(e))
+
